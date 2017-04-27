@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<h1>Add Person</h1>
+
+<ul class="list-inline">
+    <li>
+        <a href="{{ path('person_index') }}">List of People</a>
+    </li>
+</ul>
+
+{{ form_start(form) }}
+{{ form_widget(form) }}
+<input class="btn btn-primary" type="submit" value="Add Person" />
+{{ form_end(form) }}
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<h1>People list</h1>
+
+<ul class="list-inline">
+    <li>
+        <a href="{{ path('person_new') }}">Add a new Person</a>
+    </li>
+</ul>
+
+{% if pagination %}
+
+    <p>Total number of people: {{ pagination.getTotalItemCount }}</p>
+
+    <table class="table table-striped table-condensed">
+        <tr>
+            <th>First name</th>
+            <th>Last name</th>
+            <th colspan="2">Actions</th>
+        </tr>
+        {% for person in pagination %}
+
+        {% set delete_form = delete_forms[loop.index0] %}
+
+        <tr>
+            <td valign="middle">{{ person.firstname }}</td>
+            <td valign="middle">{{ person.lastname }}</td>
+            <td valign="middle" width="15%"><a class="btn btn-link" href="{{ path('person_edit', { 'id': person.id }) }}">Update Person</a></td>
+            <td valign="middle" width="15%">
+                {{ form_start(delete_form) }}
+                <input class="btn btn-link" type="submit" value="Delete Person"
+                       onclick="return confirm('Are you sure you want to delete this person?')">
+                {{ form_end(delete_form) }}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <div class="navigation">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+
+{% else %}
+
+    <p>No people found.</p>
+
+{% endif %}
+
+{% endblock %}

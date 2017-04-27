@@ -1,3 +1,30 @@
-app:
-    resource: '@AppBundle/Controller/'
-    type: annotation
+# base url
+base_url:
+  path:     /
+  defaults: { _controller: AppBundle:Default:index }
+  methods:  [GET]
+
+person_index:
+  path:     /person
+  defaults: { _controller: AppBundle:Person:index }
+  methods:  [GET]
+
+person_new:
+  path:     /person/new
+  defaults: { _controller: AppBundle:Person:new }
+  methods:  [GET, POST]
+
+person_edit:
+  path:     /person/{id}/edit
+  defaults: { _controller: AppBundle:Person:edit}
+  methods:  [GET, POST]
+  requirements:
+      id:     \d+
+
+person_delete:
+  path:     /person/{id}/delete
+  defaults: { _controller: AppBundle:Person:delete }
+  methods:  [DELETE]
+  requirements:
+      id:     \d+
+

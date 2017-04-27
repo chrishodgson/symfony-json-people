@@ -1,7 +1,15 @@
 {
-    "name": "user/skybet-technical-test",
-    "license": "proprietary",
+    "name": "chrishodgson/symfony-storyboard",
+    "description": "Technical test for Sky Bet",
+    "homepage": "https://bitbucket.org/chrishodgson/skybet-technical-test",
+    "license": "MIT",
     "type": "project",
+    "authors": [
+        {
+            "name": "Chris Hodgson",
+            "email": "hello@chrishodgsonweb.co.uk"
+        }
+    ],
     "autoload": {
         "psr-4": {
             "": "src/"
@@ -25,6 +33,7 @@
         "doctrine/doctrine-cache-bundle": "^1.2",
         "doctrine/orm": "^2.5",
         "incenteev/composer-parameter-handler": "^2.0",
+        "knplabs/knp-paginator-bundle": "^2.5",
         "sensio/distribution-bundle": "^5.0",
         "sensio/framework-extra-bundle": "^3.0.2",
         "symfony/monolog-bundle": "^3.0.2",
