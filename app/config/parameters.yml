@@ -11,6 +11,3 @@ parameters:
     mailer_user: null
     mailer_password: null
     secret: a6867611dcde599dc4a2206e9de6487a3e79f061
-    users:
-        skybet:
-            password: test

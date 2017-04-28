@@ -8,6 +8,9 @@ imports:
 parameters:
     locale: en
     per_page: 10
+    users:
+        skybet:
+            password: test
 
 framework:
     #esi: ~
