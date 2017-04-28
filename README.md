@@ -27,7 +27,7 @@ Installation instructions
 ===
 
 - read the `System Requirements` 
-- clone the repository: `git clone https://github.com/chrishodgson/storyboard.git` 
+- clone the repository: `git clone git@bitbucket.org:chrishodgson/skybet-technical-test.git` 
 - cd into the repository folder and run composer: `composer install`                      
 - serve the application: `php bin/console server:start`
 - visit `http://127.0.0.1:8000` in a web browser and login using 
