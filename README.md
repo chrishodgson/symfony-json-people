@@ -103,3 +103,13 @@ Notes
 The interfaces `PersonHydratorInterface` and `PersonModelInterface` have been used to allow easier switching of 
 dependencies (ie we might want to switch the data source from the Json file to database). 
 
+Here are a list of the PHP classes (not including unit tests):
+
+- AppBundle/Controller/PersonController
+- AppBundle/Entity/Person
+- AppBundle/Form/PersonType
+- AppBundle/Hydrator/PersonHydrator
+- AppBundle/Hydrator/PersonHydratorInterface
+- AppBundle/Model/PersonModel
+- AppBundle/Model/PersonModelInterface
+- AppBundle/Utils/JsonFileHandler
