@@ -5,6 +5,7 @@ use AppBundle\Entity\Person;
 use AppBundle\Hydrator\PersonHydrator;
 use AppBundle\Utils\JsonFileHandler;
 use InvalidArgumentException;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class PersonModel implements PersonModelInterface
 {
@@ -14,18 +15,14 @@ class PersonModel implements PersonModelInterface
     private $jsonHandler;
 
     /**
-     * @var object[]
+     * PersonModel constructor - sets up JsonFileHandler
+     * @param ContainerInterface $container
      */
-    private $jsonData;
-
-    /**
-     * PersonModel constructor - gets the People data from the Json Data Source
-     */
-    public function __construct()
+    public function __construct(ContainerInterface $container)
     {
-        $this->jsonHandler = new JsonFileHandler();
+        $path = $container->getParameter('data_folder') . 'people.json';
 
-        $this->jsonData = $this->jsonHandler->read($this->getJsonDataSource());
+        $this->jsonHandler = new JsonFileHandler($path);
     }
 
     /**
@@ -34,8 +31,10 @@ class PersonModel implements PersonModelInterface
     public function all(): array
     {
         $list = [];
-
-        foreach($this->jsonData as $item) {
+        
+        $jsonData = $this->jsonHandler->read();
+        
+        foreach ($jsonData as $item) {
             $list[] = (new PersonHydrator())->hydrate($item, new Person());
         }
 
@@ -48,9 +47,14 @@ class PersonModel implements PersonModelInterface
      */
     public function get(int $id): Person
     {
-        $results = array_filter($this->jsonData, function($item) use($id) {
-            return $item->id == $id;
-        });
+        $jsonData = $this->jsonHandler->read();
+
+        $results = array_filter(
+            $jsonData,
+            function ($item) use ($id) {
+                return $item->id == $id;
+            }
+        );
 
         $person = reset($results);
 
@@ -66,7 +70,9 @@ class PersonModel implements PersonModelInterface
      */
     public function add(Person $person): void
     {
-        $last = end($this->jsonData);
+        $jsonData = $this->jsonHandler->read();
+
+        $last = end($jsonData);
 
         $key = $last->id + 1;
 
@@ -76,9 +82,9 @@ class PersonModel implements PersonModelInterface
             'lastname' => $person->getLastname(),
         ];
 
-        array_push($this->jsonData, $item);
+        array_push($jsonData, $item);
 
-        $this->jsonHandler->write($this->getJsonDataSource(), $this->jsonData);
+        $this->jsonHandler->write($jsonData);
     }
 
     /**
@@ -86,8 +92,10 @@ class PersonModel implements PersonModelInterface
      */
     public function update(Person $person): void
     {
+        $jsonData = $this->jsonHandler->read();
+
         $results = array_map(
-            function($item) use($person) {
+            function ($item) use ($person) {
                 if ($person->getId() == $item->id) {
                     return (object) [
                         'id' => $person->getId(),
@@ -97,10 +105,11 @@ class PersonModel implements PersonModelInterface
                 } else {
                     return $item;
                 }
-            }, $this->jsonData
+            },
+            $jsonData
         );
 
-        $this->jsonHandler->write($this->getJsonDataSource(), $results);
+        $this->jsonHandler->write($results);
     }
 
     /**
@@ -108,18 +117,15 @@ class PersonModel implements PersonModelInterface
      */
     public function delete(int $id): void
     {
-        $results = array_filter($this->jsonData, function($item) use($id) {
-            return $item->id != $id;
-        });
+        $jsonData = $this->jsonHandler->read();
 
-        $this->jsonHandler->write($this->getJsonDataSource(), array_values($results));
-    }
+        $results = array_filter(
+            $jsonData,
+            function ($item) use ($id) {
+                return $item->id != $id;
+            }
+        );
 
-    /**
-     * @return string
-     */
-    private function getJsonDataSource(): string
-    {
-        return 'people.json';
+        $this->jsonHandler->write(array_values($results));
     }
 }

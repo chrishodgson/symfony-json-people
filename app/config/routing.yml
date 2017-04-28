@@ -1,8 +1,9 @@
-# base url
 base_url:
-  path:     /
-  defaults: { _controller: AppBundle:Default:index }
-  methods:  [GET]
+  path: /
+  defaults:
+    _controller: FrameworkBundle:Redirect:redirect
+    route: person_index
+    permanent: true
 
 person_index:
   path:     /person

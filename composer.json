@@ -7,7 +7,8 @@
     "authors": [
         {
             "name": "Chris Hodgson",
-            "email": "hello@chrishodgsonweb.co.uk"
+            "email": "hello@chrishodgsonweb.co.uk",
+            "skype": "chrishodgsonweb"
         }
     ],
     "autoload": {
@@ -28,7 +29,7 @@
         ]
     },
     "require": {
-        "php": ">=5.5.9",
+        "php": ">=7.1",
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/doctrine-cache-bundle": "^1.2",
         "doctrine/orm": "^2.5",
@@ -43,7 +44,13 @@
         "twig/twig": "^1.0||^2.0"
     },
     "require-dev": {
+        "pdepend/pdepend": "^2.5",
+        "phploc/phploc": "^3.0",
+        "phpmd/phpmd": "^2.6",
+        "phpunit/phpunit": "~5.7",
+        "sebastian/phpcpd": "^3.0",
         "sensio/generator-bundle": "^3.0",
+        "squizlabs/php_codesniffer": "^2.8",
         "symfony/phpunit-bridge": "^3.0"
     },
     "scripts": {
@@ -63,6 +70,7 @@
         ]
     },
     "config": {
+        "bin-dir": "bin",
         "sort-packages": true
     },
     "extra": {

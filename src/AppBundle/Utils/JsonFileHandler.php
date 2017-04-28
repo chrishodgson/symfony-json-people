@@ -4,47 +4,80 @@ namespace AppBundle\Utils;
 class JsonFileHandler
 {
     /**
-     * the relative path of the data folder
+     * @var string
      */
-    const DATA_FOLDER = __DIR__ . '/../../../data';
+    private $path;
 
     /**
-     * @param $filename
-     * @return object[]|null
+     * JsonFileHandler constructor - sets the path for the Json Data Source
+     * @param string $path
      */
-    public function read(string $filename)
+    public function __construct(string $path)
     {
-        $data = file_get_contents($this->getPath($filename));
-
-        return json_decode($data, false);
+        $this->path = $this->convertPath($path);
     }
 
     /**
-     * @param $filename
+     * @throws \RuntimeException
+     * @return object[]
+     */
+    public function read(): array
+    {
+        if (!is_readable($this->path)) {
+            throw new \RuntimeException("File is not readable with path: '{$this->path}'");
+        }
+
+        $json = file_get_contents($this->path);
+
+        return $this->decodeJson($json);
+    }
+
+    /**
      * @param $data
+     * @throws \RuntimeException
      * @return void
      */
-    public function write($filename, $data): void
+    public function write($data): void
     {
-        $encoded = json_encode($data, JSON_PRETTY_PRINT);
+        if (!is_writable($this->path)) {
+            throw new \RuntimeException("File is not writable with path: '{$this->path}'");
+        }
 
-        file_put_contents($this->getPath($filename), $encoded);
+        $encoded = $encoded = json_encode($data, JSON_PRETTY_PRINT);
+
+        file_put_contents($this->path, $encoded);
     }
 
     /**
-     * @param string $filename
+     * @param string $json
+     * @throws \RuntimeException
+     * @return object[]
+     */
+    private function decodeJson(string $json): array
+    {
+        $data = json_decode($json, false);
+
+        if (json_last_error() != JSON_ERROR_NONE) {
+            throw new \RuntimeException("Json could not be decoded.");
+        }
+
+        return $data;
+    }
+
+    /**
+     * Converts a relative path into a real path
+     * @param string $relativePath
      * @throws \RuntimeException
      * @return string
      */
-    private function getPath(string $filename): string
+    private function convertPath(string $relativePath): string
     {
-        $path = realpath(self::DATA_FOLDER . '/' . $filename);
+        $path = realpath($relativePath);
 
         if (!$path) {
-            throw new \RuntimeException('File not found in path: ' . self::DATA_FOLDER . '/' . $filename);
+            throw new \RuntimeException("File not found with path: '$relativePath'");
         }
 
         return $path;
     }
 }
-

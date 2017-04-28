@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<ruleset name="PSR2 on src">
+
+    <!-- inherit PSR2 rules -->
+    <rule ref="PSR2"/>
+
+    <file>src</file>
+
+</ruleset>

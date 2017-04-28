@@ -1,6 +1,5 @@
-/app/config/parameters.yml
+#/app/config/parameters.yml # include this to allow easier install
 /build/
-/phpunit.xml
 /var/*
 !/var/cache
 /var/cache/*

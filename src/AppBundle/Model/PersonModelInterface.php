@@ -8,29 +8,29 @@ interface PersonModelInterface
     /**
      * @return Person[]
      */
-    function all(): array;
+    public function all(): array;
 
     /**
      * @param int $id
      * @return Person
      */
-    function get(int $id): Person;
+    public function get(int $id): Person;
 
     /**
      * @param Person $person
      * @return void
      */
-    function add(Person $person): void;
+    public function add(Person $person): void;
 
     /**
      * @param Person $person
      * @return void
      */
-    function update(Person $person): void;
+    public function update(Person $person): void;
 
     /**
      * @param int $id
      * @return void
      */
-    function delete(int $id);
+    public function delete(int $id);
 }

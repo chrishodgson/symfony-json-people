@@ -9,22 +9,20 @@ use Symfony\Component\HttpFoundation\Request;
 class PersonController extends Controller
 {
     /**
-     * the number of people to display per page
-     */
-    const PEOPLE_PER_PAGE = 10;
-
-    /**
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction(Request $request): \Symfony\Component\HttpFoundation\Response
     {
-        $people = (new PersonModel)->all();
+        $personModel = $this->get('person_model');
+        
+        $people = $personModel->all();
 
         $deleteForms = array_map(
             function ($person) {
                 return $this->createDeleteForm($person)->createView();
-            }, $people
+            },
+            $people
         );
 
         $paginator  = $this->get('knp_paginator');
@@ -32,7 +30,7 @@ class PersonController extends Controller
         $pagination = $paginator->paginate(
             $people,
             $request->query->getInt('page', 1),
-            self::PEOPLE_PER_PAGE
+            $this->container->getParameter('per_page')
         );
 
         return $this->render('person/index.html.twig', [
@@ -47,13 +45,14 @@ class PersonController extends Controller
      */
     public function newAction(Request $request)
     {
+        $personModel = $this->get('person_model');
+        
         $person = new Person();
         $form = $this->createForm('AppBundle\Form\PersonType', $person);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-            (new PersonModel)->add($form->getData());
+            $personModel->add($form->getData());
 
             return $this->redirectToRoute('person_index');
         }
@@ -71,14 +70,15 @@ class PersonController extends Controller
      */
     public function editAction(Request $request, int $id)
     {
-        $person = (new PersonModel)->get($id);
+        $personModel = $this->get('person_model');
+        
+        $person = $personModel->get($id);
 
         $form = $this->createForm('AppBundle\Form\PersonType', $person);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-            (new PersonModel)->update($form->getData());
+            $personModel->update($form->getData());
 
             return $this->redirectToRoute('person_index');
         }
@@ -96,14 +96,15 @@ class PersonController extends Controller
      */
     public function deleteAction(Request $request, int $id): \Symfony\Component\HttpFoundation\RedirectResponse
     {
-        $person = (new PersonModel)->get($id);
+        $personModel = $this->get('person_model');
+        
+        $person = $personModel->get($id);
 
         $form = $this->createDeleteForm($person);
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
-
-            (new PersonModel)->delete($id);
+            $personModel->delete($id);
         }
 
         return $this->redirectToRoute('person_index');
