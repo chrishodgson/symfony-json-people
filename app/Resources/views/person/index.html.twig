@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<h1>People list</h1>
+<h1>List of People</h1>
 
 <ul class="list-inline">
     <li>
@@ -17,17 +17,17 @@
         <tr>
             <th>First name</th>
             <th>Last name</th>
-            <th colspan="2">Actions</th>
+            <th colspan="2">&nbsp;</th>
         </tr>
         {% for person in pagination %}
 
         {% set delete_form = delete_forms[loop.index0] %}
 
         <tr>
-            <td valign="middle">{{ person.firstname }}</td>
-            <td valign="middle">{{ person.lastname }}</td>
-            <td valign="middle" width="15%"><a class="btn btn-link" href="{{ path('person_edit', { 'id': person.id }) }}">Update Person</a></td>
-            <td valign="middle" width="15%">
+            <td >{{ person.firstname }}</td>
+            <td >{{ person.lastname }}</td>
+            <td width="15%"><a class="btn btn-link" href="{{ path('person_edit', { 'id': person.id }) }}">Update Person</a></td>
+            <td width="15%">
                 {{ form_start(delete_form) }}
                 <input class="btn btn-link" type="submit" value="Delete Person"
                        onclick="return confirm('Are you sure you want to delete this person?')">

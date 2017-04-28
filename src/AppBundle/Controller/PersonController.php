@@ -11,7 +11,7 @@ class PersonController extends Controller
     /**
      * the number of people to display per page
      */
-    const PEOPLE_PER_PAGE = 2;
+    const PEOPLE_PER_PAGE = 10;
 
     /**
      * @param Request $request
@@ -73,21 +73,19 @@ class PersonController extends Controller
     {
         $person = (new PersonModel)->get($id);
 
-        $deleteForm = $this->createDeleteForm($person);
-        $editForm = $this->createForm('AppBundle\Form\PersonType', $person);
-        $editForm->handleRequest($request);
+        $form = $this->createForm('AppBundle\Form\PersonType', $person);
+        $form->handleRequest($request);
 
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
 
-            (new PersonModel)->update($editForm->getData());
+            (new PersonModel)->update($form->getData());
 
             return $this->redirectToRoute('person_index');
         }
 
         return $this->render('person/edit.html.twig', [
             'person' => $person,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'edit_form' => $form->createView()
         ]);
     }
 
