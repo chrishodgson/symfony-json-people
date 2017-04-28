@@ -7,8 +7,7 @@
     "authors": [
         {
             "name": "Chris Hodgson",
-            "email": "hello@chrishodgsonweb.co.uk",
-            "skype": "chrishodgsonweb"
+            "email": "hello@chrishodgsonweb.co.uk"
         }
     ],
     "autoload": {
