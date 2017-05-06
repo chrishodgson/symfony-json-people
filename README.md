@@ -1,6 +1,6 @@
 Introduction
 ====
-This is the SkyBet Technical Test and has been built in PHP 7.1 and Symfony 3.2. 
+This is a small web application built using PHP 7.1 & Symfony 3.2 manage contacts in a JSON data file. 
 
 In addition to the standard Symfony install, I have added the `knplabs/knp-paginator-bundle` package to provide 
 pagination of the people list when it exceeds 10 people.
