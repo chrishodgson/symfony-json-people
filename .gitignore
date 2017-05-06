@@ -1,4 +1,4 @@
-/app/config/parameters.yml # include this to allow easier install
+/app/config/parameters.yml
 /build/
 /var/*
 !/var/cache

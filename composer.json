@@ -1,13 +1,12 @@
 {
-    "name": "chrishodgson/symfony-storyboard",
-    "description": "Technical test for Sky Bet",
-    "homepage": "https://bitbucket.org/chrishodgson/skybet-technical-test",
+    "name": "chrishodgson/symfony-json-contacts",
+    "description": "Small web application built using PHP 7.1 & Symfony 3.2 manage contacts in a JSON data file.",
+    "keywords": ["symfony3", "php71", "json"],
     "license": "MIT",
     "type": "project",
     "authors": [
         {
-            "name": "Chris Hodgson",
-            "email": "hello@chrishodgsonweb.co.uk"
+            "name": "Chris Hodgson"
         }
     ],
     "autoload": {
